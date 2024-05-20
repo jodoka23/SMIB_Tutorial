@@ -184,7 +184,7 @@ def _write_single_pf(grid, pf, model_name, data_dirs, pf_num, export_pf_results,
 
     # Getting indices of the branches which are a transformer in the grid object
     for n_branch, branch in enumerate(grid.get_branches()):
-        if str(branch.branch_type) == 'transformer':
+        if str(branch.type_name) == 'transformer':
             br_trafos_index.append(n_branch)
             br_trafos_from.append(branch.bus_from)
             br_trafos_to.append(branch.bus_to)
@@ -450,7 +450,7 @@ def _write_single_pf(grid, pf, model_name, data_dirs, pf_num, export_pf_results,
 
         # Per bus
         headers = ["P [MW]", "Q [MVAR]", "Bus_Type"]
-        df_bus = pd.DataFrame(index = grid.bus_names, columns = headers)
+        df_bus = pd.DataFrame(index = grid.get_bus_names(), columns = headers)
 
         # Bus results data frame
         df_bus["P [MW]"] = np.real(pf.results.Sbus)*grid.Sbase
